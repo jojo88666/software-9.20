@@ -1,4 +1,4 @@
-# 实验3：报修模块核心代码与模块间接口调用
+# 实验 6：编码规范与模块化编程
 
 ## 1. 模块选择
 
@@ -14,39 +14,15 @@
 该目录是一个可独立编译、测试的“报修模块抽取版”，不包含完整登录页面、数据库配置和全部 Thymeleaf 页面。完整系统中的其他模块通过接口适配器接入本模块。
 
 ## 2. 目录结构
-
-    src
-    ├─ main
-    │  ├─ java/com/example/dormitory/repair
-    │  │  ├─ controller
-    │  │  │  ├─ RepairController.java
-    │  │  │  └─ RepairExceptionHandler.java
-    │  │  ├─ dto
-    │  │  │  ├─ RepairFinishCommand.java
-    │  │  │  └─ RepairSubmitCommand.java
-    │  │  ├─ exception
-    │  │  │  └─ BusinessException.java
-    │  │  ├─ mapper
-    │  │  │  └─ RepairRecordMapper.java
-    │  │  ├─ model
-    │  │  │  ├─ RepairRecord.java
-    │  │  │  └─ RepairStatus.java
-    │  │  ├─ port
-    │  │  │  ├─ DormitoryQueryPort.java
-    │  │  │  ├─ StudentQueryPort.java
-    │  │  │  ├─ UserQueryPort.java
-    │  │  │  └─ dto
-    │  │  │     ├─ DormitoryInfo.java
-    │  │  │     └─ StudentInfo.java
-    │  │  ├─ service
-    │  │  │  ├─ RepairService.java
-    │  │  │  └─ impl/RepairServiceImpl.java
-    │  │  └─ vo
-    │  │     └─ RepairVO.java
-    │  └─ resources/mapper
-    │     └─ RepairRecordMapper.xml
-    └─ test/java/com/example/dormitory/repair/service/impl
-       └─ RepairServiceImplTest.java
+├── DormitoryQueryPort.java     // 宿舍信息查询接口
+├── StudentQueryPort.java       // 学生信息查询接口
+├── RepairService.java          // 报修业务服务接口
+├── RepairServiceImpl.java      // 报修业务接口实现类
+├── RepairRecordMapper.xml      // MyBatis 数据库映射文件
+├── RepairServiceImplTest.java  // 报修模块单元测试
+├── README.md                   // 项目说明文档
+├── hello.c                     // 实验 1 代码
+└── 软工实验设计规划.docx       // 前期实验规划文档
 
 ## 3. 模块边界
 
