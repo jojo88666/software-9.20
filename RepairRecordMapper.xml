@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dormitory.repair.mapper.RepairRecordMapper">
+
+    <select id="findById" resultType="com.example.dormitory.repair.model.RepairRecord">
+        SELECT id, student_id, dormitory_id, description, status, handler_id, result,
+               create_time, accept_time, finish_time, update_time
+        FROM repair_record
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByStudentId" resultType="com.example.dormitory.repair.model.RepairRecord">
+        SELECT id, student_id, dormitory_id, description, status, handler_id, result,
+               create_time, accept_time, finish_time, update_time
+        FROM repair_record
+        WHERE student_id = #{studentId}
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="findByDormitoryIds" resultType="com.example.dormitory.repair.model.RepairRecord">
+        SELECT id, student_id, dormitory_id, description, status, handler_id, result,
+               create_time, accept_time, finish_time, update_time
+        FROM repair_record
+        WHERE dormitory_id IN
+        <foreach collection="dormitoryIds" item="dormitoryId" open="(" separator="," close=")">
+            #{dormitoryId}
+        </foreach>
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="findAll" resultType="com.example.dormitory.repair.model.RepairRecord">
+        SELECT id, student_id, dormitory_id, description, status, handler_id, result,
+               create_time, accept_time, finish_time, update_time
+        FROM repair_record
+        ORDER BY create_time DESC
+    </select>
+
+    <insert id="insert" parameterType="com.example.dormitory.repair.model.RepairRecord"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO repair_record
+        (student_id, dormitory_id, description, status, handler_id, result,
+         create_time, accept_time, finish_time, update_time)
+        VALUES
+        (#{studentId}, #{dormitoryId}, #{description}, #{status}, #{handlerId}, #{result},
+         #{createTime}, #{acceptTime}, #{finishTime}, #{updateTime})
+    </insert>
+
+    <update id="accept">
+        UPDATE repair_record
+        SET status = 'ACCEPTED',
+            handler_id = #{handlerId},
+            accept_time = NOW(),
+            update_time = NOW()
+        WHERE id = #{id}
+          AND status = 'PENDING'
+    </update>
+
+    <update id="finish">
+        UPDATE repair_record
+        SET status = 'FIXED',
+            handler_id = #{handlerId},
+            result = #{result},
+            finish_time = NOW(),
+            update_time = NOW()
+        WHERE id = #{id}
+          AND status = 'ACCEPTED'
+    </update>
+</mapper>
